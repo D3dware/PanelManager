@@ -1,0 +1,20 @@
+PANEL MANAGER:
+
+- Projeto:
+	https://github.com/D3dware/Panel-Manager.git
+
+
+(ATENÇÃO: Por favor, não modifique nenhum dado de créditos do desenvolvedor, esse projeto possui uma assinatura digital para evitar plágios, muito obrigado pelo apoio e compreensão!)
+
+
+- Compartilhamento de Banco de dados:
+	basta copiar o "Panels.db" com os dados para a pasta raiz do programa do outro usuário e substituir os dados. (Recomendo fortemente, que leia a documentação do usuário fornecida nessa mesma pasta)!
+	
+	O database é local e não necessita de configurações de rede!
+
+
+- Firewall/Antivírus:
+	O programa cria um arquivo no disco local C: para armazenar a chave AES, e outro é o próprio banco de dados na pasta raiz do programa, portanto ele necessita de autorização do firewall/antivírus, recomendo que adicione a aplicação nos programas autorizados para maior conforto do usuário.
+
+
+Kelvin Santos Dmitruk @D3dware (GitHub)
