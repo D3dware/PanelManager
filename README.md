@@ -17,5 +17,5 @@ tomadas em sua rotina laboratorial. Desde já agradeço a confiança e a oportun
 trabalharmos juntos rumo a um futuro próspero para a saúde. Por favor, aproveite sua 
 aplicação!
 
-### Versão Compilada: 
+### Última Versão Compilada: 
 Clique na opção [Download](https://drive.google.com/file/d/1iSENuhsgZYZCRAFTSbh7sHcjHWYUHGgA/view?usp=sharing) e baixe os arquivos seguindo as instruções na documentação do usuário!
