@@ -25,12 +25,10 @@ public class Painel_DAO {
  
     private String secretKey;
 
-    //construtor
     public Painel_DAO(){
         this.secretKey = new DatabaseCreation().crypt();
     }
 
-    // Verificar se os dados já existem no banco de dados
     private boolean dataExists(Connection connection, String lote, String marca, String amostra, String ABO, String RH) throws SQLException {
         String query = "SELECT COUNT(*) FROM painel WHERE lote = ? AND marca = ? AND amostra = ? AND ABO = ? AND RH = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -62,7 +60,6 @@ public class Painel_DAO {
         return false;
     }
     
-    // Adicionar novo obj
     public void add_PAINEL(painel obj) {
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
             if (!dataExists(connection, obj.getLote(), obj.getMarca(), obj.getAmostra(), obj.getABO(), obj.getRH())) {
@@ -119,7 +116,6 @@ public class Painel_DAO {
         }
     }
     
-    //LISTAR DATABASE
     public List<painel> listar_PAINEL() {
         List<painel> lista = new ArrayList<>();
         try (Connection con = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
@@ -177,7 +173,6 @@ public class Painel_DAO {
         return lista;
     }
     
-    //LISTAR POR ID
     public List<painel> buscar_PAINEL_POR_ID(String id) {
         List<painel> lista = new ArrayList<>();
         try (Connection con = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
@@ -237,7 +232,6 @@ public class Painel_DAO {
         return lista;
     }
     
-    //LISTAR POR outras Strings (GENOTIPAGEM)
     public List<painel> buscar_PAINEL_GENO(String txt) {
         List<painel> lista = new ArrayList<>();
         try (Connection con = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
@@ -266,7 +260,6 @@ public class Painel_DAO {
         return lista;
     }
     
-    //ADICIONAR GENOTIPAGEM
     public void add_GENO(String marca, String lote, String amostra, String ID, String feno, String extendida){
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
             if (dataExists_2(connection, lote, marca, amostra, feno)) {
@@ -288,7 +281,6 @@ public class Painel_DAO {
         }
     }
     
-    //EDITAR PAINEL
     public void ATUALIZAR_AMOSTRA(painel obj, String id) {
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
             if (!dataExists(connection, obj.getLote(), obj.getMarca(), obj.getAmostra(), obj.getABO(), obj.getRH())) {
@@ -345,7 +337,6 @@ public class Painel_DAO {
         }
     }
     
-    //DELETAR PAINEL INTEIRO
     public void DELETAR_DB() {
         try (Connection con = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
             String sql = "DELETE FROM painel";
@@ -358,7 +349,6 @@ public class Painel_DAO {
         }
     }
     
-    //DELETAR ID
     public void DELETAR_AMOSTRA(String id) {
         try (Connection con = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
             String sql = "DELETE FROM painel WHERE id = ?";
@@ -376,7 +366,6 @@ public class Painel_DAO {
         }
     }
     
-    //DELETAR PAINEL + LOTE expecifico
     public boolean deletarPainel(String lote, String marca) {
         String sqlSelect = "SELECT id, lote, marca FROM painel";
         String sqlDelete = "DELETE FROM painel WHERE id = ?";
@@ -405,78 +394,20 @@ public class Painel_DAO {
         }
     }
     
-    //ANALISAR TESTE EM BANCADA (NÃO UTILIZADO!!!)
-    public List<String> analisarTestesEmBancada(String marca, String lote, List<String> sequenciasPositivas) {
-        Map<String, Set<String>> hemaciasPorAntigeno = new HashMap<>();
-        Set<String> antigenosComuns = new HashSet<>();
-
-        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
-            // Criptografar as sequências fornecidas
-            List<String> sequenciasCriptografadas = sequenciasPositivas.stream()
-                .map(seq -> views.main.AESUtil.encrypt(seq, secretKey))
-                .collect(Collectors.toList());
-
-            // Construção da consulta SQL com COLLATE NOCASE apenas para a marca
-            String sql = "SELECT * FROM painel WHERE lote = ? AND marca = ? AND sequencia IN (" + 
-                         sequenciasCriptografadas.stream().map(s -> "?").collect(Collectors.joining(",")) + ")";
-
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                stmt.setString(1, views.main.AESUtil.encrypt(lote, secretKey));
-                stmt.setString(2, views.main.AESUtil.encrypt(marca, secretKey));
-                for (int i = 0; i < sequenciasCriptografadas.size(); i++) {
-                    stmt.setString(3 + i, sequenciasCriptografadas.get(i));
-                }
-
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        for (String coluna : getAntigenColumns()) {
-                            String antigeno = views.main.AESUtil.decrypt(rs.getString(coluna), secretKey);
-                            if ("+".equals(antigeno)) {
-                                hemaciasPorAntigeno.computeIfAbsent(coluna, k -> new HashSet<>()).add(rs.getString("sequencia"));
-                            }}}
-
-                    // Verificação dos antígenos comuns
-                    antigenosComuns.addAll(hemaciasPorAntigeno.keySet());
-                    for (String antigeno : hemaciasPorAntigeno.keySet()) {
-                        if (hemaciasPorAntigeno.get(antigeno).size() != sequenciasPositivas.size()) {
-                            antigenosComuns.remove(antigeno);
-                        }}}}
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao analisar testes: " + ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
-
-        if (antigenosComuns.isEmpty()) {
-            List<String> resultado = new ArrayList<>();
-            String result = "INDETERMINADO";
-            resultado.add(result);
-            return resultado;
-        }
-        
-        // Construção do resultado com as strings solicitadas
-        List<String> resultados = new ArrayList<>();
-        resultados.addAll(antigenosComuns);
-        return resultados;
-    }
-    
-    //ANALISE 2.0
     public String analisarTESTE(String marca, String lote, List<String> sequenciasPositivas) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
-            // Conecta ao banco de dados SQLite
             connection = DriverManager.getConnection("jdbc:sqlite:Panels.db");
-            // Criptografa a marca e o lote
             String encryptedMarca = views.main.AESUtil.encrypt(marca, secretKey);
             String encryptedLote = views.main.AESUtil.encrypt(lote, secretKey);
 
-            // Criptografa as sequências positivas
             List<String> sequenciasCriptografadas = sequenciasPositivas.stream()
                     .map(seq -> views.main.AESUtil.encrypt(seq, secretKey))
                     .collect(Collectors.toList());
 
-            // Cria a consulta SQL para buscar as hemácias correspondentes
             String sql = "SELECT * FROM painel WHERE lote = ? AND marca = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, encryptedLote);
@@ -486,7 +417,6 @@ public class Painel_DAO {
 
             List<String> antigenColumns = getAntigenColumns();
 
-            // Armazena os resultados em um mapa para verificação posterior
             Map<String, Map<String, String>> antigenResultsMap = new HashMap<>();
             List<String> todasSequencias = new ArrayList<>();
 
@@ -503,42 +433,35 @@ public class Painel_DAO {
                 antigenResultsMap.put(sequenciaBanco, antigenResults);
             }
 
-            // Verifica as sequências não informadas pelo usuário e considera como negativas
             List<String> sequenciasNegativas = todasSequencias.stream()
                     .filter(seq -> !sequenciasPositivas.contains(seq))
                     .collect(Collectors.toList());
 
-            // Percorre as colunas dos antígenos
             for (String column : antigenColumns) {
                 boolean allPositive = true;
 
-                // Verifica o resultado do antígeno para cada sequência positiva fornecida
                 for (String sequenciaPositiva : sequenciasPositivas) {
                     Map<String, String> antigenResults = antigenResultsMap.get(sequenciaPositiva);
                     if (antigenResults != null) {
                         String antigenResult = antigenResults.get(column);
                         System.out.println("Antigeno " + column + " Resultado para Hemácia " + sequenciaPositiva + ": " + antigenResult);
 
-                        // Se encontrar qualquer resultado negativo, define allPositive como false e interrompe o loop
                         if (!"+".equals(antigenResult)) {
                             allPositive = false;
                             break;
                         }}}
 
-                // Verifica o resultado do antígeno para cada sequência negativa
                 for (String sequenciaNegativa : sequenciasNegativas) {
                     Map<String, String> antigenResults = antigenResultsMap.get(sequenciaNegativa);
                     if (antigenResults != null) {
                         String antigenResult = antigenResults.get(column);
                         System.out.println("Antigeno " + column + " Resultado para Hemácia " + sequenciaNegativa + ": " + antigenResult);
 
-                        // Se encontrar qualquer resultado positivo, define allPositive como false e interrompe o loop
                         if ("+".equals(antigenResult)) {
                             allPositive = false;
                             break;
                         }}}
 
-                // Se allPositive for true, retorna o antígeno correspondente
                 if (allPositive) {
                     return column;
                 }}
@@ -563,16 +486,13 @@ public class Painel_DAO {
         return "INDETERMINADO";
     }
     
-    // Função para obter as colunas dos antígenos
     private List<String> getAntigenColumns() {
         return Arrays.asList("D", "C", "c_pequeno", "E", "e_pequeno", "f", "CW", "kpa", "kpb", "K", "cellano", "JSA", "JSB", "dia", "lua", "lub", "Cob", "Xga", "fya", "fyb", "jka", "jkb", "m", "n", "S", "s_pequeno", "p1", "IR_P1", "lea", "leb");
     }
 
-    //LISTAR por LOTE E MARCA
     public List<painel> Listar_LOTE_MARCA(String lote, String marca) {
         List<painel> lista = new ArrayList<>();
         try (Connection con = DriverManager.getConnection("jdbc:sqlite:Panels.db")) {
-            // Adicionar LOWER() na consulta SQL para tornar a comparação insensível a maiúsculas/minúsculas
             String sql = "SELECT * FROM painel WHERE LOWER(lote) = LOWER(?) AND LOWER(marca) = LOWER(?)";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
                 stmt.setString(1, lote);
@@ -625,7 +545,6 @@ public class Painel_DAO {
                 }
             }
 
-            // Ordenar a lista pela coluna "sequencia" após a descriptografia
             lista.sort(Comparator.comparingInt(p -> Integer.parseInt(p.getSequencia())));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar amostra: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -633,7 +552,6 @@ public class Painel_DAO {
         return lista;
     }
     
-    //PESQUISAR
     public List<painel> buscarRegistros(String pesquisa) {
         String sql = "SELECT * FROM painel";
         List<painel> resultados = new ArrayList<>();
@@ -642,7 +560,6 @@ public class Painel_DAO {
             try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 ResultSet rs = pstmt.executeQuery();
 
-                // Processar os resultados
                 while (rs.next()) {
                     painel obj = new painel();
                     obj.setId(rs.getString("id"));
@@ -684,7 +601,6 @@ public class Painel_DAO {
                     obj.setLeb(views.main.AESUtil.decrypt(rs.getString("leb"), secretKey));
                     obj.setObservacoes(views.main.AESUtil.decrypt(rs.getString("observacoes"), secretKey));
 
-                    // Verificar se o registro corresponde à pesquisa
                     if (matchesSearch(obj, pesquisa)) {
                         resultados.add(obj);
                     }
