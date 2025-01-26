@@ -6,7 +6,6 @@ package models;
  */
 public class painel {
     
-    //atributos
     private String id;
     private String lote;
     private String marca;
@@ -15,7 +14,6 @@ public class painel {
     private String RH;
     private String sequencia;
 
-    //RH
     private String D;
     private String C;
     private String c_pequeno;
@@ -24,7 +22,6 @@ public class painel {
     private String f;
     private String CW;
     
-    //KELL
     private String kpa;
     private String kpb;
     private String K;
@@ -32,52 +29,35 @@ public class painel {
     private String JSA;
     private String JSB;
     
-    //DIEGO
     private String dia;
     
-    //LUTHERAN
     private String lua;
     private String lub;
     
-    //COLT
     private String Cob;
     
-    //XG
     private String Xga;
     
-    //DUFFY
     private String fya;
     private String fyb;
     
-    //KIDD
     private String jka;
     private String jkb;
     
-    //MNS
     private String M;
     private String N;
     private String S;
     private String s;
     
-    //PP1PK
     private String p1;
     private String IR_P1;
     
-    //LEWIS
     private String lea;
     private String leb;
     
-    //genotipagem
     private String genotipagem;
    
-    //OUTROS
     private String observacoes;
-    //
-    //
-
-    
-    //--------------------------------------------------------------------//
-    //getters e setters
 
     public String getId() {
         return id;
