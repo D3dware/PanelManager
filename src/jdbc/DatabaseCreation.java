@@ -20,16 +20,12 @@ public class DatabaseCreation {
         Statement statement = null;
 
         try {
-            // Carregar o driver JDBC SQLite
             Class.forName("org.sqlite.JDBC");
 
-            // Conectar ao banco de dados (criará o arquivo Panels.db se não existir)
             connection = DriverManager.getConnection("jdbc:sqlite:Panels.db");
 
-            // Criar uma declaração SQL
             statement = connection.createStatement();
 
-            // Executar a consulta para criar a tabela
             String sql = "CREATE TABLE IF NOT EXISTS painel (" +
                     "id INTEGER PRIMARY KEY, " +
                     "lote TEXT, " +
@@ -91,14 +87,13 @@ public class DatabaseCreation {
     }    
 
     public String crypt(){
-    // Verifique o arquivo para carregar a credencial AES
     try {
         File file2 = new File("C:/Panel_Manager/AutoUpdate/Conf.ini");
 
         if (file2.exists() && file2.length() != 0){
             try (Scanner scanner1 = new Scanner(file2)) {
 
-                String secret2 = scanner1.nextLine(); // --------------> 16bits/
+                String secret2 = scanner1.nextLine();
 
                 if (secret2 != null){
 
