@@ -844,10 +844,8 @@ public class Adicionar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnADICIONARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnADICIONARActionPerformed
-        // BOTÃO ADICIONAR:
         painel obj = new painel();
         
-        //INFO
         obj.setLote(txtLOTE.getText().isEmpty() ? "*" : txtLOTE.getText());
         obj.setMarca(txtMARCA.getText().isEmpty() ? "*" : txtMARCA.getText());
         obj.setAmostra(txtAMOSTRA.getText().isEmpty() ? "*" : txtAMOSTRA.getText());
@@ -855,7 +853,6 @@ public class Adicionar extends javax.swing.JFrame {
         obj.setRH(txtRH.getText().isEmpty() ? "*" : txtRH.getText());
         obj.setSequencia(txtSEQUENCIA.getText().isEmpty() ? "*" : txtSEQUENCIA.getText());
         
-        //RH
         obj.setD(rdD.isSelected() ? "+" : "/-/");
         obj.setC(rdC.isSelected() ? "+" : "/-/");
         obj.setC_pequeno(rdC_Pequeno.isSelected() ? "+" : "/-/");
@@ -864,52 +861,40 @@ public class Adicionar extends javax.swing.JFrame {
         obj.setF(rdF.isSelected() ? "+" : "/-/");
         obj.setCW(rdCW.isSelected() ? "+" : "/-/");
         
-        //KELL
         obj.setKpa(rdKPA.isSelected() ? "+" : "/-/");
         obj.setKpb(rdKPB.isSelected() ? "+" : "/-/");
         obj.setK(rdK.isSelected() ? "+" : "/-/");
         obj.setCellano(rdCellano.isSelected() ? "+" : "/-/");
         
-        //JSA
         obj.setJSA(rdJSA.isSelected() ? "+" : "/-/");
         obj.setJSB(rdJSB.isSelected() ? "+" : "/-/");
 
-        //DIEGO
         obj.setDia(rdDIA.isSelected() ? "+" : "/-/");
         
-        //LUTHERAN
         obj.setLua(rdLUA.isSelected() ? "+" : "/-/");
         obj.setLub(rdLUB.isSelected() ? "+" : "/-/");
 
-        //COB
         obj.setCob(rdCOB.isSelected() ? "+" : "/-/");
 
-        //Xga
         obj.setXga(rdXGA.isSelected() ? "+" : "/-/");
         
-        //DUFFY
         obj.setFya(rdFYA.isSelected() ? "+" : "/-/");
         obj.setFyb(rdFYB.isSelected() ? "+" : "/-/");
         
-        //KIDD
         obj.setJka(rdJKA.isSelected() ? "+" : "/-/");
         obj.setJkb(rdJKB.isSelected() ? "+" : "/-/");
         
-        //MNS
         obj.setM(rdM.isSelected() ? "+" : "/-/");
         obj.setN(rdN.isSelected() ? "+" : "/-/");
         obj.setS(rdS.isSelected() ? "+" : "/-/");
         obj.sets(rdS_pequeno.isSelected() ? "+" : "/-/");
         
-        //PP1PK
         obj.setP1(rdP1.isSelected() ? "+" : "/-/");
         obj.setIR_P1(rdIR_P1.isSelected() ? "+" : "/-/");
         
-        //LEWIS
         obj.setLea(rdLEA.isSelected() ? "+" : "/-/");
         obj.setLeb(rdLEB.isSelected() ? "+" : "/-/");
         
-        //OBSERVAÇÕES
         obj.setObservacoes(txtOBSERVACOES.getText().isEmpty() ? "*" : txtOBSERVACOES.getText());
         
         Painel_DAO dao = new Painel_DAO();
@@ -919,7 +904,6 @@ public class Adicionar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnADICIONARActionPerformed
 
     private void limparcampos(){
-        //CAMPOS
         txtAMOSTRA.setText(null);
         txtLOTE.setText(null);
         txtMARCA.setText(null);
@@ -928,8 +912,6 @@ public class Adicionar extends javax.swing.JFrame {
         txtOBSERVACOES.setText(null);
         txtSEQUENCIA.setText(null);
         
-        //FENOTIPAGEM:
-        //RH
         rdD.setSelected(false);
         rdC.setSelected(false);
         rdC_Pequeno.setSelected(false);
@@ -938,49 +920,37 @@ public class Adicionar extends javax.swing.JFrame {
         rdF.setSelected(false);
         rdCW.setSelected(false);
         
-        //KELL
         rdKPA.setSelected(false);
         rdKPB.setSelected(false);
         rdK.setSelected(false);
         rdCellano.setSelected(false);
         
-        //Jsa
         rdJSA.setSelected(false);
         rdJSB.setSelected(false);
 
-        
-        //DIEGO
         rdDIA.setSelected(false);
         
-        //LUTHERAN
         rdLUA.setSelected(false);
         rdLUB.setSelected(false);
         
-        //Cob
         rdCOB.setSelected(false);
         
-        //XGA
         rdXGA.setSelected(false);
         
-        //DUFFY
         rdFYA.setSelected(false);
         rdFYB.setSelected(false);
         
-        //KIDD
         rdJKA.setSelected(false);
         rdJKB.setSelected(false);
         
-        //LEWIS
         rdLEA.setSelected(false);
         rdLEB.setSelected(false);
 
-        //MNS
         rdM.setSelected(false);
         rdN.setSelected(false);
         rdS.setSelected(false);
         rdS_pequeno.setSelected(false);
         
-        //PP1PK
         rdP1.setSelected(false);
         rdIR_P1.setSelected(false);
           
