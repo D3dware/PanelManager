@@ -234,7 +234,6 @@ public class Deletar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iconDELETAR_DBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconDELETAR_DBMouseClicked
-        //DELETAR DATABASE:
         int confirm = JOptionPane.showConfirmDialog(null, "Deseja mesmo DELETAR TODO O BANCO DE DADOS ?", "CONFIRMAÇÃO", JOptionPane.YES_NO_OPTION);
         if (confirm == 0) {
             Painel_DAO dao1 = new Painel_DAO();
@@ -244,7 +243,6 @@ public class Deletar extends javax.swing.JFrame {
     }//GEN-LAST:event_iconDELETAR_DBMouseClicked
 
     private void iconEXCLUIR_hemaciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconEXCLUIR_hemaciaMouseClicked
-        //DELETAR HEMACIA:
         
         String id = txtID.getText();
         
