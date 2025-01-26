@@ -1,7 +1,7 @@
 # PANEL MANAGER
 
 ### Última Versão Compilada: 
-Clique na opção [Download](https://drive.google.com/file/d/1iSENuhsgZYZCRAFTSbh7sHcjHWYUHGgA/view?usp=sharing) e baixe os arquivos seguindo as instruções na documentação do usuário!
+Clique na opção [Download](https://drive.google.com/file/d/1kB2tbIXFWjmzm83nJW_5YhQOzyHj0Xbb/view?usp=drive_link) e baixe os arquivos seguindo as instruções na documentação do usuário!
 
 ### Atenção:
  Este sistema de análise de antígenos foi projetado para ser uma ferramenta eficiente e 
