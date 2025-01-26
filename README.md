@@ -18,4 +18,4 @@ trabalharmos juntos rumo a um futuro próspero para a saúde. Por favor, aprovei
 aplicação!
 
 ### Versão Compilada: 
-Clique na opção [Download](https://drive.google.com/drive/folders/1yvzSs61UpY5HUfa65MDTXLawVa04Kk_S?usp=sharing) e baixe os arquivos seguindo as instruções na documentação do usuário!
+Clique na opção [Download]([https://drive.google.com/drive/folders/1yvzSs61UpY5HUfa65MDTXLawVa04Kk_S?usp=sharing](https://drive.google.com/file/d/1iSENuhsgZYZCRAFTSbh7sHcjHWYUHGgA/view?usp=sharing)) e baixe os arquivos seguindo as instruções na documentação do usuário!
